@@ -1,9 +1,9 @@
-interface HyperNode {
-  children: HyperNode[]
+interface VNode {
+  children: VNode[] | string | boolean | number
 }
 
 type HyperScriptFn =
-  <T, P extends MapOf<any>, C extends (string | HyperNode)>(t: T, p: P, ...c: C[]) => C
+  <T, P extends MapOf<any>, C extends VNode>(t: T, p: P, ...c: C[]) => C
 
 interface MapOf<T> {
   [key: string]: T
@@ -15,8 +15,8 @@ interface Options {
 
 function ZipScript(opts?: Options, comps?: MapOf<any>) {
   let {h} = opts
-  let cur: HyperNode = null
-  let ctx: HyperNode[] = []
+  let cur: VNode = null
+  let ctx: VNode[] = []
   let anchors: MapOf<number> = {}
   let wrapped: MapOf<any> = {}
 }
