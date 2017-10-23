@@ -1,6 +1,6 @@
 'use strict'
 var assert = require('assert')
-undefined = void 0  // Reset undefined.
+var undefined = void 0  // Reset undefined.
 
 
 function ZipScript(opts, comps) {
@@ -58,3 +58,5 @@ function ZipScript(opts, comps) {
 
   return wrapped
 }
+
+var {z, start, end} = ZipScript()
