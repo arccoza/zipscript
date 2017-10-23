@@ -1,13 +1,13 @@
+interface MapOf<T> {
+  [key: string]: T
+}
+
 interface VNode {
   children: VNode[] | string | boolean | number
 }
 
 type HyperScriptFn =
   <T, P extends MapOf<any>, C extends VNode>(t: T, p: P, ...c: C[]) => C
-
-interface MapOf<T> {
-  [key: string]: T
-}
 
 interface Options {
   h: HyperScriptFn
