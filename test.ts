@@ -3,7 +3,7 @@ interface MapOf<T> {
 }
 
 interface VNode {
-  children: VNode[] | string | boolean | number
+  children: VNode[] | string | number | boolean
 }
 
 type HyperScriptFn =
