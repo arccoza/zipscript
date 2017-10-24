@@ -12,14 +12,12 @@ function ZipScript(opts, comps) {
   var wrapped = {}
 
   function z(type, props, ...children) {
-    var v = h(type, props, ...children)
+    cur = {type, props, children}
 
-    if (cur != null)
-      (cur.props ? cur.props.children : cur.children).push(v)
-    else 
-      ctx.push(cur = v)
-
-    print(cur)
+    if (ctx.length)
+      ctx[ctx.length - 1].children.push(cur)
+    else
+      ctx.push(cur)
   }
 
   z.wrap = wrap
