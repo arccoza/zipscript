@@ -1,21 +1,25 @@
 'use strict'
+var print = console.log.bind(console)
 var assert = require('assert')
 var undefined = void 0  // Reset undefined.
 
 
 function ZipScript(opts, comps) {
+  var {h} = opts
   var cur = null
   var ctx = []
   var anchors = {}
   var wrapped = {}
 
   function z(type, props, ...children) {
-    var v = opts.h(type, props, ...children)
+    var v = h(type, props, ...children)
 
     if (cur != null)
-      cur.children.push(v)
+      (cur.props ? cur.props.children : cur.children).push(v)
     else 
       ctx.push(cur = v)
+
+    print(cur)
   }
 
   z.wrap = wrap
@@ -59,4 +63,10 @@ function ZipScript(opts, comps) {
   return wrapped
 }
 
-var {z, start, end} = ZipScript()
+// var {z, start, end} = ZipScript({h: require('hyperscript-html').HyperScript()})
+// print(require('react').createElement)
+var {z, start, end} = ZipScript({h: require('react').createElement})
+
+z('div', null, [])
+start()
+  z('h1', null, 'Title')
