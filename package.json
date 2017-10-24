@@ -1,0 +1,10 @@
+{
+  "name": "zipscript",
+  "version": "0.2.0",
+  "description": "A better way to write UI",
+  "main": "index.js",
+  "repository": "git@github.com:arccoza/zipscript.git",
+  "author": "Adrien <adrien@arccoza.com>",
+  "license": "MIT",
+  "private": true
+}
