@@ -5,11 +5,11 @@ var undefined = void 0  // Reset undefined.
 
 
 function ZipScript(opts, comps) {
-  var {h} = opts
-  var cur = null
-  var ctx = []
-  var anchors = {}
-  var wrapped = {}
+  let {h} = opts
+  let cur = null
+  let ctx = []
+  let anchors = {}
+  let wrapped = {}
 
   function z(type, props, ...children) {
     cur = {type, props, children}
