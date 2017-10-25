@@ -21,6 +21,13 @@ function ZipScript(opts, comps) {
       ctx.push(cur)
   }
 
+  function text(strs, ...vals) {
+    if (ctx.length) {
+      let s = strs.reduce((s, v, i) => s + v + (vals[i] || ''), '')
+      ctx[ctx.length - 1].children.push(s)
+    }
+  }
+
   z.wrap = wrap
 
   function wrap(type) {
@@ -67,6 +74,8 @@ function ZipScript(opts, comps) {
   }
 
   wrapped.z = z
+  wrapped.t = text
+  wrapped.text = text
   wrapped.wrap = wrap
   wrapped.start = start
   wrapped.end = end
@@ -74,7 +83,7 @@ function ZipScript(opts, comps) {
   return wrapped
 }
 
-var {z, start, end} = ZipScript({h: require('hyperscript-html').HyperScript()})
+var {z, text, start, end} = ZipScript({h: require('hyperscript-html').HyperScript()})
 // print(require('react').createElement)
 // var {z, start, end} = ZipScript({h: require('react').createElement})
 
@@ -85,7 +94,9 @@ z('section', null)
     start()
     z('p', null, 'content')
       start()
+      text`oh ${'wha'} `
       z('b', null, 'yeah')
+      text`yep`
       // end()
     end(2)
   z('aside')
