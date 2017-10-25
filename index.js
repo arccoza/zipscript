@@ -83,21 +83,48 @@ function ZipScript(opts, comps) {
   return wrapped
 }
 
-var {z, text, start, end} = ZipScript({h: require('hyperscript-html').HyperScript()})
-// print(require('react').createElement)
-// var {z, start, end} = ZipScript({h: require('react').createElement})
+// var h = require('hyperscript-html').HyperScript()
+var h = require('react').createElement
+var {z, text, start, end} = ZipScript({h: h})
+var result = null
 
+var time = process.hrtime()
+for(var i = 0; i < 100000; i++) {
 z('section', null)
   // start()
   z('h1', null, 'Title')
   z('div', null)
-    start()
+    start('content')
     z('p', null, 'content')
       start()
-      text`oh ${'wha'} `
+      // text`oh ${'wha'} `
       z('b', null, 'yeah')
-      text`yep`
+      // text`yep`
       // end()
-    end(2)
+    end('content')
   z('aside')
-  print(end())
+  result = end(2) // FIX THIS, shouldn't have to call end with `2`
+}
+
+print(result)
+print(process.hrtime(time))
+
+
+var time = process.hrtime()
+for(var i = 0; i < 100000; i++) {
+result = h('section', null,
+  h('h1', null, 'Title'),
+  h('div', null,
+    h('p', null, 'content',
+      // `oh ${'wha'} `,
+      h('b', null, 'yeah'),
+      // `yep`,
+    )
+  ),
+  h('aside')
+)
+
+}
+
+print(result)
+print(process.hrtime(time))
