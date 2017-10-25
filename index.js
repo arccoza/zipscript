@@ -13,6 +13,7 @@ function ZipScript(opts, comps) {
 
   function z(type, props, ...children) {
     cur = {type, props, children}
+    // print(cur)
 
     if (ctx.length)
       ctx[ctx.length - 1].children.push(cur)
@@ -29,25 +30,37 @@ function ZipScript(opts, comps) {
   }
 
   function start(anchor) {
-    var idx = ctx.push(cur) - 1
+    let idx = ctx.push(cur) - 1
 
     if (anchor != null)
       anchors[anchor] = idx
   }
 
-  function end(countOrAnchor) {
-    var idx = anchors[countOrAnchor]
+  function end(countOrAnchor=1) {
+    let idx = anchors[countOrAnchor]
     idx = idx === undefined ? ctx.length - 1 - countOrAnchor : (anchors[countOrAnchor] = null, idx)
 
-    assert(ctx[idx] !== undefined, 'Error changing context, invalid index: ' + idx)
-    if (ctx[idx] !== undefined) {
-      cur = ctx[idx]
-      ctx = ctx.slice(0, idx + 1)
+    // assert(idx >= -1 && ctx[idx] !== undefined, `Error changing context, invalid index (${idx}) from: end(${countOrAnchor})`)
+
+    // print('============')
+    // print(ctx[ctx.length - 1] ? ctx[ctx.length - 1].type : ctx[ctx.length - 1])
+
+    // print('-----------')
+    // Move up through the ctx stack to the selected idx.
+    for (let i = ctx.length - 1, v; (v = ctx[i], i > idx); i--) {
+      v.children = v.children.map(c => c.type ? h(c.type, c.props, ...c.children) : c)
+      // print(i, v.children.map((c) => c.type ? c.type : c))
     }
+    cur = ctx[idx]
+    let pre = ctx[idx + 1]
+    ctx = ctx.slice(0, idx + 1)
+    
+    let {type, props, children} = pre
+    return h(type, props, ...children)
   }
 
   // Wrap any provided components, to be returned.
-  for (var k in comps) {
+  for (let k in comps) {
     if (comps.hasOwnProperty(k)) {
       wrapped[k] = wrap(comps[k])
     }
@@ -61,10 +74,19 @@ function ZipScript(opts, comps) {
   return wrapped
 }
 
-// var {z, start, end} = ZipScript({h: require('hyperscript-html').HyperScript()})
+var {z, start, end} = ZipScript({h: require('hyperscript-html').HyperScript()})
 // print(require('react').createElement)
-var {z, start, end} = ZipScript({h: require('react').createElement})
+// var {z, start, end} = ZipScript({h: require('react').createElement})
 
-z('div', null, [])
-start()
+z('section', null)
+  // start()
   z('h1', null, 'Title')
+  z('div', null)
+    start()
+    z('p', null, 'content')
+      start()
+      z('b', null, 'yeah')
+      // end()
+    end(2)
+  z('aside')
+  print(end())
