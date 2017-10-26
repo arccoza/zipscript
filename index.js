@@ -1,8 +1,12 @@
 'use strict'
 var print = console.log.bind(console)
-var assert = require('assert')
 var undefined = void 0  // Reset undefined.
 
+
+function assert(isValid, orElse) {
+  if (!isValid)
+    throw orElse instanceof Error ? orElse : new Error(orElse)
+}
 
 function ZipScript(opts, comps) {
   let {h} = opts
@@ -47,7 +51,7 @@ function ZipScript(opts, comps) {
     let idx = anchors[countOrAnchor]
     idx = idx === undefined ? ctx.length - countOrAnchor : (anchors[countOrAnchor] = null, idx)
     
-    assert(typeof idx == 'number', 'Bad index.')
+    assert(typeof idx == 'number' && idx >= 0, 'Bad index.')
     --idx
     
     // Move up through the ctx stack to the selected idx.
@@ -72,6 +76,8 @@ function ZipScript(opts, comps) {
 
   return {...wrapped, z, t: text, text, wrap, start, end}
 }
+
+
 
 var h = require('hyperscript-html').HyperScript()
 // var h = require('react').createElement
