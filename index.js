@@ -29,8 +29,6 @@ function ZipScript(opts, comps) {
     }
   }
 
-  z.wrap = wrap
-
   function wrap(type) {
     return function(...args) {
       return z(type, ...args)
@@ -74,14 +72,7 @@ function ZipScript(opts, comps) {
     }
   }
 
-  wrapped.z = z
-  wrapped.t = text
-  wrapped.text = text
-  wrapped.wrap = wrap
-  wrapped.start = start
-  wrapped.end = end
-
-  return wrapped
+  return {z, t: text, text, wrap, start, end, ...wrapped}
 }
 
 // var h = require('hyperscript-html').HyperScript()
