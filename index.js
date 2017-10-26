@@ -49,7 +49,7 @@ function ZipScript(opts, comps) {
     idx = idx === undefined ? ctx.length - countOrAnchor : (anchors[countOrAnchor] = null, idx)
     
     assert(typeof idx == 'number' && idx >= 0, 'Bad index.')
-    --idx
+    --idx  // Step the index back one more to the ctx before the one we are ending.
     
     // Move up through the ctx stack to the selected idx.
     for (let i = ctx.length - 1, v; (v = ctx[i], i > idx); i--) {
@@ -60,6 +60,10 @@ function ZipScript(opts, comps) {
     pre = ctx[idx + 1]
     ctx = ctx.slice(0, idx + 1)
     
+    // Skip rendering, for perf, unless it is the last node.
+    if (cur)
+      return
+
     let {type, props, children} = pre
     return h(type, props, ...children)
   }
@@ -76,13 +80,13 @@ function ZipScript(opts, comps) {
 
 
 
-var h = require('hyperscript-html').HyperScript()
-// var h = require('react').createElement
+// var h = require('hyperscript-html').HyperScript()
+var h = require('react').createElement
 var {z, text, start, end} = ZipScript({h: h})
 var result = null
 
 var time = process.hrtime()
-for(var i = 0; i < 1; i++) {
+for(var i = 0; i < 100000; i++) {
 z('section', null)
   start()
   z('h1', null, 'Title')
@@ -104,7 +108,7 @@ print(process.hrtime(time))
 
 
 var time = process.hrtime()
-for(var i = 0; i < 1; i++) {
+for(var i = 0; i < 100000; i++) {
 result = h('section', null,
   h('h1', null, 'Title'),
   h('div', null,
