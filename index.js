@@ -23,7 +23,8 @@ function ZipScript(opts, comps) {
 
   function text(strs, ...vals) {
     if (ctx.length) {
-      let s = strs.reduce((s, v, i) => s + v + (vals[i] || ''), '')
+      let s, v, i
+      for (i = 0; v = strs[i]; i++) s += v + (vals[i] || '')
       ctx[ctx.length - 1].children.push(s)
     }
   }
@@ -97,9 +98,9 @@ z('section', null)
     start('content')
     z('p', null, 'content')
       start()
-      // text`oh ${'wha'} `
+      text`oh ${'wha'} `
       z('b', null, 'yeah')
-      // text`yep`
+      text`yep`
       // end()
     end('content')
   z('aside')
@@ -116,9 +117,9 @@ result = h('section', null,
   h('h1', null, 'Title'),
   h('div', null,
     h('p', null, 'content',
-      // `oh ${'wha'} `,
+      `oh ${'wha'} `,
       h('b', null, 'yeah'),
-      // `yep`,
+      `yep`,
     )
   ),
   h('aside')
