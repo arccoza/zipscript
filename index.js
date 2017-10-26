@@ -72,7 +72,7 @@ function ZipScript(opts, comps) {
     }
   }
 
-  return {z, t: text, text, wrap, start, end, ...wrapped}
+  return {...wrapped, z, t: text, text, wrap, start, end}
 }
 
 // var h = require('hyperscript-html').HyperScript()
