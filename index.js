@@ -51,7 +51,7 @@ function ZipScript(opts, comps) {
     assert(typeof idx == 'number' && idx >= 0, 'Bad index.')
     --idx  // Step the index back one more to the ctx before the one we are ending.
     
-    // Move up through the ctx stack to the selected idx.
+    // Move up through the ctx stack to before the selected idx.
     for (let i = ctx.length - 1, v; (v = ctx[i], i > idx); i--) {
       v.children = v.children.map(c => c.type ? h(c.type, c.props, ...c.children) : c)
     }
