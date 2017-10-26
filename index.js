@@ -17,12 +17,9 @@ function ZipScript(opts, comps) {
 
   function z(type, props, ...children) {
     cur = {type, props, children}
-    // print(cur)
 
     if (ctx.length)
       ctx[ctx.length - 1].children.push(cur)
-    // else
-    //   ctx.push(cur)
   }
 
   function text(strs, ...vals) {
