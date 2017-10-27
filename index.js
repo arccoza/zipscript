@@ -17,7 +17,7 @@ function ZipScript(opts, comps) {
 
   // TODO: Make this fn's interface more flexible.
   function z(type, props, ...children) {
-    cur = {type, props, children}
+    cur = {type, props, children, $$z: true}
 
     if (ctx.length)
       ctx[ctx.length - 1].children.push(cur)
@@ -58,7 +58,7 @@ function ZipScript(opts, comps) {
     
     // Move up through the ctx stack to before the selected idx.
     for (let i = ctx.length - 1, v; (v = ctx[i], i > idx); i--) {
-      v.children = v.children.map(c => c.type ? h(c.type, c.props, ...c.children) : c)
+      v.children = v.children.map(c => c.$$z ? h(c.type, c.props, ...c.children) : c)
     }
 
     cur = ctx[idx]
