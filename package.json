@@ -8,6 +8,11 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+  },
+  "devDependencies": {
+    "inferno": "^3.10.1",
+    "mithril": "^1.1.5",
+    "preact": "^8.2.6",
     "react": "^16.0.0"
   }
 }
