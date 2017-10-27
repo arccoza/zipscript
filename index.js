@@ -82,12 +82,37 @@ function ZipScript(opts, comps) {
 }
 
 
-
+var comps = {section: 'section', aside: 'aside', div: 'div', h1: 'h1', p: 'p', b: 'b'}
 // var h = require('hyperscript-html').HyperScript()
 var h = require('react').createElement
-var {z, text, start, end} = ZipScript({h: h})
+var {z, text, start, end, section, aside, div, h1, p, b} = ZipScript({h: h}, comps)
 var result = null
 
+
+print('----------------------------------------------')
+var time = process.hrtime()
+for(var i = 0; i < 100000; i++) {
+section()
+  start()
+  h1(null, 'Title')
+  div()
+    start('content')
+    p(null, 'content')
+      start()
+      text`oh ${'wha'} `
+      b(null, 'yeah')
+      text`yep`
+      // end()
+    end('content')
+  aside()
+  result = end()
+}
+
+print(result)
+print(process.hrtime(time))
+
+
+print('----------------------------------------------')
 var time = process.hrtime()
 for(var i = 0; i < 100000; i++) {
 z('section', null)
@@ -110,6 +135,7 @@ print(result)
 print(process.hrtime(time))
 
 
+print('----------------------------------------------')
 var time = process.hrtime()
 for(var i = 0; i < 100000; i++) {
 result = h('section', null,
