@@ -15,6 +15,7 @@ function ZipScript(opts, comps) {
   let anchors = {}
   let wrapped = {}
 
+  // TODO: Make this fn's interface more flexible.
   function z(type, props, ...children) {
     cur = {type, props, children}
 
@@ -29,6 +30,8 @@ function ZipScript(opts, comps) {
       ctx[ctx.length - 1].children.push(s)
     }
   }
+
+  // TODO: Add a fn to insert extra children/items rendered elsewhere.
 
   function wrap(type) {
     return function(...args) {
