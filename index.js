@@ -25,9 +25,9 @@ function ZipScript(opts, comps) {
 
   function text(strs, ...vals) {
     if (ctx.length) {
-      let s, v, i
-      for (i = 0; v = strs[i]; i++) s += v + (vals[i] || '')
-      ctx[ctx.length - 1].children.push(s)
+      let t, s, i
+      for (i = 0; s = strs[i]; i++) t += s + (vals[i] || '')
+      ctx[ctx.length - 1].children.push(t)
     }
   }
 
