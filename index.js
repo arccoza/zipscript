@@ -31,7 +31,11 @@ function ZipScript(opts, comps) {
     }
   }
 
-  // TODO: Add a fn to insert extra children/items rendered elsewhere.
+  // A fn to insert extra children/items rendered elsewhere.
+  function extra(...items) {
+    if (ctx.length)
+      ctx[ctx.length - 1].children.push(...items)
+  }
 
   function wrap(type) {
     return z.bind(null, type)
