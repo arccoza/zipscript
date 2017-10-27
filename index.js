@@ -34,9 +34,7 @@ function ZipScript(opts, comps) {
   // TODO: Add a fn to insert extra children/items rendered elsewhere.
 
   function wrap(type) {
-    return function(...args) {
-      return z(type, ...args)
-    }
+    return z.bind(null, type)
   }
 
   function start(anchor) {
@@ -83,8 +81,8 @@ function ZipScript(opts, comps) {
 
 
 var comps = {section: 'section', aside: 'aside', div: 'div', h1: 'h1', p: 'p', b: 'b'}
-// var h = require('hyperscript-html').HyperScript()
-var h = require('react').createElement
+var h = require('hyperscript-html').HyperScript()
+// var h = require('react').createElement
 var {z, text, start, end, section, aside, div, h1, p, b} = ZipScript({h: h}, comps)
 var result = null
 
