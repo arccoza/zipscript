@@ -83,87 +83,93 @@ function ZipScript(opts, comps) {
   return {...wrapped, z, t: text, text, extra, wrap, start, end}
 }
 
-
-var comps = {section: 'section', aside: 'aside', div: 'div', h1: 'h1', p: 'p', b: 'b'}
-// var h = require('hyperscript-html').HyperScript()
-var h = require('react').createElement
-var {z, text, extra, start, end, section, aside, div, h1, p, b} = ZipScript({h: h}, comps)
-var result = null
-
-
-var stuff = h('div', null,
-  h('p', null,
-    h('span', null, 'extra extra')
-  )
-)
-
-
-print('----------------------------------------------')
-var time = process.hrtime()
-for(var i = 0; i < 100000; i++) {
-section()
-  start()
-  h1(null, 'Title')
-  extra(stuff, stuff)
-  div()
-    start('content')
-    p(null, 'content')
-      start()
-      text`oh ${'wha'} `
-      b(null, 'yeah')
-      text`yep`
-      // end()
-    end('content')
-  aside()
-  result = end()
+module.exports = {
+  ZipScript
 }
 
-print(result)
-print(process.hrtime(time))
+
+if (require && require.main === module) {
+  var comps = {section: 'section', aside: 'aside', div: 'div', h1: 'h1', p: 'p', b: 'b'}
+  // var h = require('hyperscript-html').HyperScript()
+  var h = require('react').createElement
+  var {z, text, extra, start, end, section, aside, div, h1, p, b} = ZipScript({h: h}, comps)
+  var result = null
 
 
-print('----------------------------------------------')
-var time = process.hrtime()
-for(var i = 0; i < 100000; i++) {
-z('section', null)
-  start()
-  z('h1', null, 'Title')
-  extra(stuff, stuff)
-  z('div', null)
-    start('content')
-    z('p', null, 'content')
-      start()
-      text`oh ${'wha'} `
-      z('b', null, 'yeah')
-      text`yep`
-      // end()
-    end('content')
-  z('aside')
-  result = end()
-}
-
-print(result)
-print(process.hrtime(time))
-
-
-print('----------------------------------------------')
-var time = process.hrtime()
-for(var i = 0; i < 100000; i++) {
-result = h('section', null,
-  h('h1', null, 'Title'),
-  stuff,
-  stuff,
-  h('div', null,
-    h('p', null, 'content',
-      `oh ${'wha'} `,
-      h('b', null, 'yeah'),
-      `yep`,
+  var stuff = h('div', null,
+    h('p', null,
+      h('span', null, 'extra extra')
     )
-  ),
-  h('aside')
-)
+  )
 
+
+  print('----------------------------------------------')
+  var time = process.hrtime()
+  for(var i = 0; i < 100000; i++) {
+  section()
+    start()
+    h1(null, 'Title')
+    extra(stuff, stuff)
+    div()
+      start('content')
+      p(null, 'content')
+        start()
+        text`oh ${'wha'} `
+        b(null, 'yeah')
+        text`yep`
+        // end()
+      end('content')
+    aside()
+    result = end()
+  }
+
+  print(result)
+  print(process.hrtime(time))
+
+
+  print('----------------------------------------------')
+  var time = process.hrtime()
+  for(var i = 0; i < 100000; i++) {
+  z('section', null)
+    start()
+    z('h1', null, 'Title')
+    extra(stuff, stuff)
+    z('div', null)
+      start('content')
+      z('p', null, 'content')
+        start()
+        text`oh ${'wha'} `
+        z('b', null, 'yeah')
+        text`yep`
+        // end()
+      end('content')
+    z('aside')
+    result = end()
+  }
+
+  print(result)
+  print(process.hrtime(time))
+
+
+  print('----------------------------------------------')
+  var time = process.hrtime()
+  for(var i = 0; i < 100000; i++) {
+  result = h('section', null,
+    h('h1', null, 'Title'),
+    stuff,
+    stuff,
+    h('div', null,
+      h('p', null, 'content',
+        `oh ${'wha'} `,
+        h('b', null, 'yeah'),
+        `yep`,
+      )
+    ),
+    h('aside')
+  )
+
+  }
+
+  print(result)
+  print(process.hrtime(time))
 }
-
-print(result)
-print(process.hrtime(time))
