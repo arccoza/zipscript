@@ -3,9 +3,9 @@ var print = console.log.bind(console)
 var undefined = void 0  // Reset undefined.
 
 
-function assert(isValid, orElse) {
+function assert(isValid, orElse, ErrType = Error) {
   if (!isValid)
-    throw orElse instanceof Error ? orElse : new Error(orElse)
+    throw orElse instanceof Error ? orElse : new ErrType(orElse)
 }
 
 function ZipScript(opts, comps) {
@@ -53,7 +53,7 @@ function ZipScript(opts, comps) {
     let idx = anchors[countOrAnchor]
     idx = idx === undefined ? ctx.length - countOrAnchor : (anchors[countOrAnchor] = null, idx)
     
-    assert(typeof idx == 'number' && idx >= 0, 'Bad index.')
+    assert(typeof idx == 'number' && idx >= 0, 'Bad index.', TypeError)
     --idx  // Step the index back one more to the ctx before the one we are ending.
     
     // Move up through the ctx stack to before the selected idx.
